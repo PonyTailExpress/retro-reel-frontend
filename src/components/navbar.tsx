@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       {/* Left side: Home */}
-      <div className="navbar-links">
+      <div className="navbar-container">
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
       </div>

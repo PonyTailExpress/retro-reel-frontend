@@ -1,20 +1,13 @@
-import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 
-// const App: React.FC = () => {
-//   // Authentication state
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [user, setUser] = useState<{ name: string } | null>(null);
-
-//   const logOutUser = () => {
-//     setIsLoggedIn(false);
-//     setUser(null);
-//   };
-
-
+import AboutPage from "./pages/AboutPage";
+import SignUpPage from "./pages/SignUpPage";
+import SignInPage from "./pages/SignInPage";
+import HomePage from "./pages/HomePage";
+import EightiesMovieList from "./pages/EightiesMovieList";
 
 function App() {
   return (
@@ -23,10 +16,11 @@ function App() {
         <Navbar />
         <div style={{ paddingTop: "60px" }}> {/* Offset for fixed navbar */}
           <Routes>
-            <Route path="/" element={<div>Home Page</div>} />
-            <Route path="/about" element={<div>About Page</div>} />
-            <Route path="/signup" element={<div>Sign Up Page</div>} />
-            <Route path="/login" element={<div>Sign In Page</div>} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<SignInPage />} />
+            <Route path="/80smovies" element={<EightiesMovieList />} />
           </Routes>
         </div>
       </Router>
