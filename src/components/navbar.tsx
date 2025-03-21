@@ -1,41 +1,38 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
+import { Button } from "@mantine/core";
+import "./navbar.css";
 
-interface NavbarProps {
-  isLoggedIn: boolean;
-  user: { name: string } | null;
-  logOutUser: () => void;
-}
+const Navbar = () => {
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
-const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, user, logOutUser }) => {
   return (
-    <nav>
-      <Link to="/">
-        <button>Home</button>
-      </Link>
+    <nav className="navbar">
+      {/* Left side: Home */}
+      <div className="navbar-links">
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </div>
 
-      <Link to="/about">
-        <button>About</button>
-      </Link>
-
-      {isLoggedIn ? (
-        <>
-          <Link to="/projects">
-            <button>Projects</button>
-          </Link>
-
-          <button onClick={logOutUser}>Logout</button>
-          <span>{user?.name}</span>
-        </>
-      ) : (
-        <>
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
-          <Link to="/login">
-            <button>Sign In</button>
-          </Link>
-        </>
-      )}
+      {/* Right side: Auth Links */}
+      <div className="auth-buttons">
+        {isLoggedIn && user ? (
+          <>
+            <Button variant="light" onClick={logOutUser}>Logout</Button>
+            <span className="user-name">{user.name}</span>
+          </>
+        ) : (
+          <>
+            <Link to="/signup">
+              <Button variant="filled">Sign Up</Button>
+            </Link>
+            <Link to="/login">
+              <Button variant="outline">Sign In</Button>
+            </Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 };
