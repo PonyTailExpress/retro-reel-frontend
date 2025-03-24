@@ -1,4 +1,5 @@
 import React from "react";
+import './AboutPage.css';
 
 const imgURL = "https://c.tenor.com/ALyNaaBlqhQAAAAC/tenor.gif";
 

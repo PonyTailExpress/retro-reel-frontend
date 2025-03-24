@@ -18,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -25,77 +26,115 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
   min-width: 320px;
   min-height: 100vh;
+  background-color: #242424;
+  /* Dark background for the whole page */
+  color: white;
+  /* Text color for better readability */
+  flex-direction: column;
+  /* Stack content vertically */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
+/* Retro 80s/90s Button Styling */
 button {
-  border-radius: 8px;
+  border-radius: 6px;
+  /* Slightly sharper corners */
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: 10px 20px;
+  font-size: 16px;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-family: 'Orbitron', sans-serif;
+  /* Retro 80s/90s font */
+  background-color: #ff4081;
+  /* Neon pink color */
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s, text-shadow 0.3s;
+  box-shadow: 0 0 8px rgba(255, 64, 129, 0.8);
+  text-align: center;
+  display: inline-block;
+  min-width: 120px;
+  margin: 0 10px;
 }
+
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  background-color: #d78f00;
+  box-shadow: 0 0 15px rgba(255, 64, 129, 1);
+  color: #fff;
+  text-shadow: 0 0 10px #ff4081;
 }
 
+/* Button Container Styling - Center the buttons vertically and horizontally */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  /* Stack buttons vertically */
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  /* Allow it to adjust based on content */
+  gap: 20px;
+  /* Space between the buttons */
+  margin-top: 20px;
+  /* Space above the buttons */
+}
 
-Shared Styles for Both Forms
+/* Welcome Message and Paragraph Styling */
+.home-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  /* Center text */
+  /* background-color: #242424; */
+  /* Dark background for the container */
+  color: white;
+}
+
+/* Title Styling */
+.home-page-container h1 {
+  font-size: 3rem;
+  font-family: 'Orbitron', sans-serif;
+  color: #ff4081;
+  margin-bottom: 20px;
+}
+
+/* Paragraph Styling */
+.home-page-container p {
+  font-size: 1.25rem;
+  color: #f0a500;
+  margin-bottom: 40px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Center form content (if any forms like signup/signin exist) */
+
 .signup-form,
 .signin-form {
   max-width: 400px;
   width: 90%;
-  /* Ensure it doesn't overflow on small screens */
   margin: 0 auto;
-  /* Center the form horizontally */
   padding: 20px;
   background: #f8f9fa;
+  /* Lighter background for the forms */
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Center content vertically */
   align-items: center;
-  /* Center content horizontally */
   position: absolute;
-  /* Position the form absolutely */
   top: 50%;
-  /* Move the form down by 50% of the viewport height */
   left: 50%;
-  /* Move the form right by 50% of the viewport width */
   transform: translate(-50%, -50%);
-  /* Center the form precisely */
   box-sizing: border-box;
-  /* Include padding in width and height */
 }
 
 .signup-form h2,
@@ -104,5 +143,78 @@ Shared Styles for Both Forms
   color: #007bff;
   margin-bottom: 20px;
   font-size: 2rem;
-  /* Larger font size for headings */
+}
+
+/* Styling the labels inside the form */
+.signup-form label,
+.signin-form label {
+  font-size: 1rem;
+  color: #333;
+  /* Dark color for the labels to ensure visibility */
+  margin-bottom: 8px;
+  font-weight: bold;
+  display: block;
+}
+
+/* Input fields inside the form */
+.signup-form input,
+.signin-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f0f0f0;
+  /* Light background for input fields */
+  color: #333;
+  /* Dark text inside input fields */
+}
+
+/* Focus effect for input fields */
+.signup-form input:focus,
+.signin-form input:focus {
+  border-color: #ff4081;
+  /* Neon pink focus border */
+  outline: none;
+}
+
+/* Button styles inside the form */
+.signup-form button,
+.signin-form button {
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #ff4081;
+  /* Neon pink button */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  border: none;
+  box-shadow: 0 0 8px rgba(255, 64, 129, 0.8);
+  text-align: center;
+  min-width: 120px;
+  margin: 0 10px;
+}
+
+.signup-form button:hover,
+.signin-form button:hover {
+  background-color: #d78f00;
+  box-shadow: 0 0 15px rgba(255, 64, 129, 1);
+  text-shadow: 0 0 10px #ff4081;
+}
+
+.signup-form button:focus,
+.signin-form button:focus {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Form text (like error messages) */
+.signup-form p,
+.signin-form p {
+  font-size: 0.9rem;
+  color: #d9534f;
+  /* Red color for error messages */
+  text-align: center;
+  margin-top: 10px;
 }

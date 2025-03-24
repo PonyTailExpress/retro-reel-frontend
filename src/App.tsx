@@ -9,6 +9,7 @@ import SignInPage from "./pages/SignInPage";
 import HomePage from "./pages/HomePage";
 import EightiesMovieList from "./pages/EightiesMovieList";
 import NinetiesMovieList from "./pages/NinetiesMovieList";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/login" element={<SignInPage />} />
             <Route path="/films/80s" element={<EightiesMovieList />} />
             <Route path="/films/90s" element={<NinetiesMovieList />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
           </Routes>
         </div>
       </Router>

@@ -1,0 +1,101 @@
+/* AboutPage.css */
+
+/* Body styling for the About page */
+body {
+    background-color: #242424;
+    /* Dark background for the entire page */
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    /* Retro font style */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* About Us container styling */
+.about-us-container {
+    text-align: center;
+    padding: 30px;
+    max-width: 800px;
+    width: 90%;
+    background-color: #333333;
+    /* Slightly lighter background for the container */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+/* Mission section */
+.mission {
+    background-color: #444444;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.mission h1 {
+    font-size: 2rem;
+    color: #ff4081;
+    /* Neon pink color for the header */
+    text-shadow: 0 0 10px #ff4081;
+}
+
+.mission p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+/* About section */
+h1 {
+    font-size: 2.5rem;
+    color: #ff4081;
+    text-shadow: 0 0 10px #ff4081;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+/* Story section */
+.my-story {
+    background-color: #444444;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.my-story h1 {
+    font-size: 2rem;
+    color: #ff4081;
+    text-shadow: 0 0 10px #ff4081;
+}
+
+.my-story p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+/* Retro Image Styling */
+img {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 64, 129, 0.8);
+    /* Neon glow effect around the image */
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
