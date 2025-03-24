@@ -76,7 +76,7 @@ const SignInForm: React.FC = () => {
       authenticateUser();
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/profilepage");
       }, 1000);
     } catch (err: any) {
       console.error("Error Response:", err.response?.data);

@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import EightiesMovieList from "./pages/EightiesMovieList";
 import NinetiesMovieList from "./pages/NinetiesMovieList";
 import ForgotPassword from "./pages/ForgotPassword";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/films/80s" element={<EightiesMovieList />} />
             <Route path="/films/90s" element={<NinetiesMovieList />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/profilepage" element={<ProfilePage />} />
           </Routes>
         </div>
       </Router>
