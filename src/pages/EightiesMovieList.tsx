@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Container, Grid, Card, Image, Text, Loader, Alert } from "@mantine/core";
 
-// Define the API key and base URL
-const API_KEY = "7ffceb24"; // Replace with your API key
-const API_URL = "http://www.omdbapi.com/";
+// Load environment variables
+const API_URL = import.meta.env.VITE_OMDB_API_URL;
+const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
 interface Movie {
+  imdbID: string;
   Title: string;
   Year: string;
-  Poster: string; // We'll be using this to display the poster image
+  Poster: string;
 }
 
 const EightiesMovieList: React.FC = () => {
-  const [movies, setMovies] = useState<Movie[]>([]); // State to store fetched movies
-  const [error, setError] = useState<string>(""); // Error state for API failures
-  const [loading, setLoading] = useState<boolean>(true); // Loading state
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
-  // Function to fetch movies (change the search term as needed)
+  // Fetch movies from OMDb API
   const fetchMovies = async (searchTerm: string) => {
     try {
       setLoading(true);
       const response = await axios.get(API_URL, {
         params: {
-          s: searchTerm, // Search term (e.g., '80s movies')
+          s: searchTerm,
           apikey: API_KEY,
         },
       });
 
-      // Check if response is successful and contains Search results
       if (response.data.Response === "True") {
         setMovies(response.data.Search);
       } else {
@@ -41,29 +42,40 @@ const EightiesMovieList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchMovies("80s movies"); // Default search term to fetch 80s movies
-  }, []); // Empty array ensures this only runs once when the component mounts
+    fetchMovies("80s movies"); // Default search term for 80s movies
+  }, []);
 
   return (
-    <div className="movie-list">
-      <h2>Movie List</h2>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+    <Container>
+      <Text size="xl" fw={700} ta="center" my="md">
+        Classic Movies of the 80s
+      </Text>
 
-      <div className="movie-posters">
-        {movies.length > 0 ? (
-          movies.map((movie, index) => (
-            <div key={index} className="movie-item">
-              <img src={movie.Poster} alt={movie.Title} />
-              <h3>{movie.Title} ({movie.Year})</h3>
-            </div>
-          ))
-        ) : (
-          <p>No movies available.</p>
-        )}
-      </div>
-    </div>
+      {loading && <Loader size="xl" />}
+      {error && <Alert color="red">{error}</Alert>}
+
+      <Grid>
+        {movies.map((movie) => (
+          <Grid.Col key={movie.imdbID} span={4}>
+            <Card shadow="sm" p="lg" radius="md" withBorder>
+              <Card.Section>
+                <Image
+                  src={movie.Poster !== "N/A" ? movie.Poster : "/placeholder.jpg"}
+                  alt={movie.Title}
+                  height={300}
+                />
+              </Card.Section>
+              <Text ta="center" fw={600} mt="sm">
+                {movie.Title} ({movie.Year})
+              </Text>
+            </Card>
+          </Grid.Col>
+        ))}
+      </Grid>
+    </Container>
   );
 };
 
 export default EightiesMovieList;
+
+

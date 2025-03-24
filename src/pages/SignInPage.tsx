@@ -5,7 +5,6 @@ import { AuthContext } from "../context/auth.context";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Define types for form data and the response
 interface FormData {
   email: string;
   password: string;
