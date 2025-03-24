@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
+// Update API URL to include '/api'
+// const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface FormData {
@@ -17,7 +20,7 @@ interface AuthResponse {
 const SignInForm: React.FC = () => {
   const navigate = useNavigate();
   const { storeToken, authenticateUser } = useContext(AuthContext);
-  
+
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -26,7 +29,6 @@ const SignInForm: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
-  // Handle input changes with proper typing
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({
@@ -35,7 +37,6 @@ const SignInForm: React.FC = () => {
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
@@ -45,24 +46,44 @@ const SignInForm: React.FC = () => {
       return;
     }
 
+    if (!validateEmail(formData.email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    function validateEmail(email: string) {
+      const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      return re.test(email);
+    }
+
     try {
-      // Type the API request and response
-      const response = await axios.post<AuthResponse>(`${API_URL}/auth/login`, formData);
-      
+      // Make the POST request to the updated API URL
+      console.log("Sending request with data:", formData);
+      const response = await axios.post<AuthResponse>(
+        `${API_URL}/api/auth/login`,
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // Ensure cookies or authentication tokens are included
+        }
+      );
+
       setSuccess("Sign-in successful!");
       setError("");
       console.log("Response:", response.data);
 
-      // Save the token to localStorage or context (for authentication)
       storeToken(response.data.authToken);
       authenticateUser();
 
       setTimeout(() => {
-        navigate("/concerts");
+        navigate("/");
       }, 1000);
     } catch (err: any) {
-      setError("Sign-in failed. Please check your credentials.");
-      console.error("Error:", err);
+      console.error("Error Response:", err.response?.data);
+      setError(
+        err.response?.data?.message ||
+          "Sign-in failed. Please check your credentials."
+      );
     }
   };
 
@@ -71,7 +92,7 @@ const SignInForm: React.FC = () => {
       <h2>Sign In</h2>
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -98,15 +119,14 @@ const SignInForm: React.FC = () => {
         <button type="submit" className="submit-button">
           Sign in
         </button>
-        
+
         <Link to="/signup">
           <button type="button" className="submit-button">
             Sign up
           </button>
         </Link>
       </form>
-      
-      {/* Forgot Password Link */}
+
       <div className="forgot-password-link">
         <Link to="/forgotpassword">Forgot Password?</Link>
       </div>

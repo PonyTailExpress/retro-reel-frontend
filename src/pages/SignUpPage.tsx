@@ -2,14 +2,13 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 // Define types for form data
 interface FormData {
-  name: string;
+  username: string;
   email: string;
   password: string;
-  role: boolean;
 }
 
 interface AuthResponse {
@@ -19,30 +18,20 @@ interface AuthResponse {
 const SignUpForm: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
-    name: "",
+    username: "",
     email: "",
     password: "",
-    role: false, // Add a boolean field for the role
   });
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
   // Handle input changes with proper typing
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value, type, checked } = e.target;
-
-    // Handle checkbox separately
-    if (type === "checkbox") {
-      setFormData({
-        ...formData,
-        [name]: checked, // Set the role to the checkbox's checked state
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   // Handle form submission
@@ -50,14 +39,17 @@ const SignUpForm: React.FC = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.username || !formData.email || !formData.password) {
       setError("All fields are required.");
       return;
     }
 
     try {
       // Type the API request and response
-      const response = await axios.post<AuthResponse>(`${API_URL}/auth/signup`, formData);
+      const response = await axios.post<AuthResponse>(
+        `${API_URL}/auth/signup`,
+        formData
+      );
       setSuccess("Sign-up successful!");
       setError("");
       console.log("Response:", response.data);
@@ -76,15 +68,15 @@ const SignUpForm: React.FC = () => {
       <h2>Sign Up</h2>
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="username">Name:</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
           />
