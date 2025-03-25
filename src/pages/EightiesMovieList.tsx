@@ -10,7 +10,7 @@
 //   Alert,
 // } from "@mantine/core";
 
-// const API_URL = import.meta.env.VITE_API_URL + "/movies"; // Using the environment variable
+// const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
 // interface Movie {
 //   id: number;
@@ -69,19 +69,28 @@
 //               p="lg"
 //               radius="md"
 //               withBorder
-//               style={{ minHeight: 400 }} // Increased the minHeight to accommodate longer cards
+//               style={{
+//                 height: 450, // Set a fixed height for all cards
+//                 display: "flex",
+//                 flexDirection: "column",
+//               }}
 //             >
-//               <Card.Section>
+//               <Card.Section
+//                 style={{
+//                   flex: 1, // This makes the image section grow to fill available space
+//                   overflow: "hidden", // Ensures that no part of the image overflows
+//                 }}
+//               >
 //                 <Image
 //                   src={
 //                     movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
 //                   }
 //                   alt="Movie Poster"
-//                   height={300} // Set a fixed height for the poster
 //                   style={{
-//                     objectFit: "cover",
+//                     objectFit: "cover", // Ensures the image fills the section without distortion
 //                     width: "100%",
-//                     borderRadius: "md", // Rounded corners for image
+//                     height: "100%",
+//                     borderRadius: "md",
 //                   }}
 //                 />
 //               </Card.Section>
@@ -109,6 +118,7 @@ import {
   Loader,
   Alert,
 } from "@mantine/core";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const API_URL = import.meta.env.VITE_API_URL + "/movies"; // Using the environment variable
 
@@ -164,40 +174,42 @@ const EightiesMovieList: React.FC = () => {
       <Grid>
         {movies.map((movie) => (
           <Grid.Col key={movie.imdbId} span={4}>
-            <Card
-              shadow="sm"
-              p="lg"
-              radius="md"
-              withBorder
-              style={{
-                height: 450, // Set a fixed height for all cards
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Card.Section
+            <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
+              <Card
+                shadow="sm"
+                p="lg"
+                radius="md"
+                withBorder
                 style={{
-                  flex: 1, // This makes the image section grow to fill available space
-                  overflow: "hidden", // Ensures that no part of the image overflows
+                  height: 450, // Set a fixed height for all cards
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                <Image
-                  src={
-                    movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
-                  }
-                  alt="Movie Poster"
+                <Card.Section
                   style={{
-                    objectFit: "cover", // Ensures the image fills the section without distortion
-                    width: "100%", // Fill the width of the section
-                    height: "100%", // Ensure the image stretches to fill the height
-                    borderRadius: "md", // Rounded corners for the image
+                    flex: 1, // This makes the image section grow to fill available space
+                    overflow: "hidden", // Ensures that no part of the image overflows
                   }}
-                />
-              </Card.Section>
-              <Text ta="center" fw={600} mt="sm">
-                {movie.title}
-              </Text>
-            </Card>
+                >
+                  <Image
+                    src={
+                      movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
+                    }
+                    alt="Movie Poster"
+                    style={{
+                      objectFit: "cover", // Ensures the image fills the section without distortion
+                      width: "100%", // Fill the width of the section
+                      height: "100%", // Ensure the image stretches to fill the height
+                      borderRadius: "md", // Rounded corners for the image
+                    }}
+                  />
+                </Card.Section>
+                <Text ta="center" fw={600} mt="sm">
+                  {movie.title}
+                </Text>
+              </Card>
+            </Link>
           </Grid.Col>
         ))}
       </Grid>
