@@ -1,5 +1,3 @@
-// 
-
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
@@ -27,18 +25,33 @@ const Navbar = () => {
         <Group gap="md">
           {isLoggedIn && user ? (
             <>
-              <Button variant="light" onClick={logOutUser} className="navbar-button">
+              {/* Profile Button */}
+              <Link to="/profilepage">
+                <Button variant="light" className="navbar-button">
+                  Profile
+                </Button>
+              </Link>
+
+              <Button
+                variant="light"
+                onClick={logOutUser}
+                className="navbar-button"
+              >
                 Logout
               </Button>
-              <Text className="user-name">{user.name}</Text>
+              {/* <Text className="user-name">{user.username}</Text> */}
             </>
           ) : (
             <>
               <Link to="/signup">
-                <Button variant="filled" className="navbar-button">Sign Up</Button>
+                <Button variant="filled" className="navbar-button">
+                  Sign Up
+                </Button>
               </Link>
               <Link to="/login">
-                <Button variant="outline" className="navbar-button">Sign In</Button>
+                <Button variant="outline" className="navbar-button">
+                  Sign In
+                </Button>
               </Link>
             </>
           )}

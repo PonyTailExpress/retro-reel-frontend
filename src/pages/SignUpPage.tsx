@@ -119,7 +119,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+const API_URL = `${import.meta.env.VITE_API_URL}`;
 
 // Define types for form data
 interface FormData {

@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Grid, Card, Image, Text, Loader, Alert } from "@mantine/core";
+import {
+  Container,
+  Grid,
+  Card,
+  Image,
+  Text,
+  Loader,
+  Alert,
+} from "@mantine/core";
 
-const API_URL = import.meta.env.VITE_OMDB_API_URL;
-const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
+const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
+// Define the movie interface based on your backend response
 interface Movie {
-  imdbID: string;
-  Title: string;
-  Year: string;
-  Poster: string;
+  id: number;
+  imdbId: string;
+  title: string;
+  releaseYear: number;
+  poster: string;
 }
 
 const NinetiesMovieList: React.FC = () => {
@@ -17,32 +26,24 @@ const NinetiesMovieList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  // Function to fetch movies year by year (1990-1999)
+  // Function to fetch movies from the backend
   const fetchMovies = async () => {
     setLoading(true);
     setError(""); // Reset error before fetching
-    let allMovies: Movie[] = [];
 
     try {
-      for (let year = 1990; year <= 1999; year++) {
-        const response = await axios.get(API_URL, {
-          params: {
-            s: "movie",
-            y: year,
-            type: "movie",
-            apikey: API_KEY,
-          },
-        });
+      const response = await axios.get(API_URL); // Replace with your backend API endpoint
+      const allMovies = response.data;
 
-        if (response.data.Response === "True") {
-          allMovies = [...allMovies, ...response.data.Search];
-        }
-      }
+      // Filter movies from the 1990s
+      const ninetiesMovies = allMovies.filter(
+        (movie: Movie) => movie.releaseYear >= 1990 && movie.releaseYear < 2000
+      );
 
-      if (allMovies.length === 0) {
+      if (ninetiesMovies.length === 0) {
         setError("No movies found from the 90s.");
       } else {
-        setMovies(allMovies);
+        setMovies(ninetiesMovies);
       }
     } catch (err) {
       setError("Failed to fetch movies. Please try again later.");
@@ -52,7 +53,7 @@ const NinetiesMovieList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(); // Fetch the movies when the component mounts
   }, []);
 
   return (
@@ -66,17 +67,39 @@ const NinetiesMovieList: React.FC = () => {
 
       <Grid>
         {movies.map((movie) => (
-          <Grid.Col key={movie.imdbID} span={4}>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Card.Section>
+          <Grid.Col key={movie.imdbId} span={4}>
+            <Card
+              shadow="sm"
+              p="lg"
+              radius="md"
+              withBorder
+              style={{
+                height: 450, // Set a fixed height for all cards
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Card.Section
+                style={{
+                  flex: 1, // This makes the image section grow to fill available space
+                  overflow: "hidden", // Ensures that no part of the image overflows
+                }}
+              >
                 <Image
-                  src={movie.Poster !== "N/A" ? movie.Poster : "/placeholder.jpg"}
-                  alt={movie.Title}
-                  height={300}
+                  src={
+                    movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
+                  }
+                  alt="Movie Poster"
+                  style={{
+                    objectFit: "cover", // Ensures the image fills the section without distortion
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "md",
+                  }}
                 />
               </Card.Section>
               <Text ta="center" fw={600} mt="sm">
-                {movie.Title} ({movie.Year})
+                {movie.title}
               </Text>
             </Card>
           </Grid.Col>
