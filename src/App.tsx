@@ -12,6 +12,7 @@ import NinetiesMovieList from "./pages/NinetiesMovieList";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProfilePage from "./pages/ProfilePage";
 import MovieDetail from "./pages/MovieDetail";
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/movie/:id" element={<MovieDetail />} />
           </Routes>
         </div>
+        <Footer />
       </Router>
     </MantineProvider>
   );

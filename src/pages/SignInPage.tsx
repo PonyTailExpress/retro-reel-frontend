@@ -3,9 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
-// Update API URL to include '/api'
-// const API_URL = `${import.meta.env.VITE_API_URL}/api`;
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface FormData {
@@ -60,7 +57,7 @@ const SignInForm: React.FC = () => {
       // Make the POST request to the updated API URL
       console.log("Sending request with data:", formData);
       const response = await axios.post<AuthResponse>(
-        `${API_URL}/api/auth/login`,
+        `${API_URL}/auth/login`,
         formData,
         {
           headers: { "Content-Type": "application/json" },

@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom"; // Use useNavigate for programmatic navigation
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Type definition for form data
@@ -20,7 +20,7 @@ interface ResponseError {
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ForgotPassword: React.FC = () => {
-  const navigate = useNavigate(); // useNavigate hook for programmatic navigation
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     newPassword: "",
@@ -48,7 +48,10 @@ const ForgotPassword: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`${API_URL}/auth/forgot-password`, formData);
+      const response = await axios.put(
+        `${API_URL}/auth/forgot-password`,
+        formData
+      );
       setSuccess("Password updated successfully!");
       setError("");
       console.log("Response:", response.data);
@@ -58,8 +61,11 @@ const ForgotPassword: React.FC = () => {
         navigate("/signin");
       }, 1000);
     } catch (err) {
-      const error = err as ResponseError; // Type assertion to handle the error correctly
-      setError(error.response?.data?.message || "Failed to update password. Email does not exist.");
+      const error = err as ResponseError;
+      setError(
+        error.response?.data?.message ||
+          "Failed to update password. Email does not exist."
+      );
       console.error("Error:", err);
     }
   };
