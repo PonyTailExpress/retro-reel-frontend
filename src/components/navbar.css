@@ -46,6 +46,40 @@
 }
 
 /* Navbar Tabs (Home & About Us) */
+.navbar-links {
+    display: flex;
+}
+
+.navbar-link {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 30px;
+    /* Increase this value to provide more space between Home and About */
+    font-size: 1rem;
+}
+
+.navbar-link:hover {
+    text-decoration: underline;
+}
+
+/* Navbar actions (right side) */
+.navbar-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar-button {
+    color: #fff;
+}
+
+/* Additional button styles for responsiveness */
+.navbar-button:hover {
+    background-color: #444;
+}
+
+
+
+
 .navbar-tabs {
     display: flex;
     gap: 30px;

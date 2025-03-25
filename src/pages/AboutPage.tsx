@@ -35,11 +35,11 @@ const AboutPage: React.FC = () => {
           It all started on a lazy afternoon, while reminiscing about the
           countless classics I grew up watching in the 80s and 90s. I realized
           there wasn’t a simple, organized place to search for and store all
-          these amazing films. And so, **Retro Reel** was born—a platform to
-          help film enthusiasts rediscover, enjoy, and keep track of their
-          favorite films from these legendary decades. After many nights of
-          coding and watching old movies, we created a space where fans of retro
-          cinema could come together and relive the magic of the past.
+          these amazing films. And so, Retro Reel was born—a platform to help
+          film enthusiasts rediscover, enjoy, and keep track of their favorite
+          films from these legendary decades. After many nights of coding and
+          watching old movies, we created a space where fans of retro cinema
+          could come together and relive the magic of the past.
         </p>
       </section>
 

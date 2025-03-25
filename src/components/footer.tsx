@@ -7,7 +7,7 @@ function Footer() {
       style={{
         textAlign: "center",
         padding: "20px",
-        background: "#222",
+        background: "##ff69b4",
         color: "#fff",
       }}
     >
@@ -33,7 +33,11 @@ function Footer() {
           <img
             src={gitHubLogo}
             alt="GitHub Logo"
-            style={{ width: "50px", height: "auto" }}
+            style={{
+              width: "50px",
+              height: "auto",
+              filter: "invert(1)", // This makes the logo white
+            }}
           />
         </a>
       </div>
