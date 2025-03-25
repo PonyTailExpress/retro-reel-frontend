@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
       {/* Welcome message */}
       <h1>Welcome to Retro Reel!</h1>
       <p>Discover the best films from the 80s and 90s.</p>
-      
+
       <div className="button-container">
         {/* Button for 80s Films */}
         <Link to="/films/80s">

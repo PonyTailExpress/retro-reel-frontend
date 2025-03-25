@@ -64,16 +64,19 @@
 // export default Navbar;
 
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { AuthContext } from "../context/auth.context";
 import { Button, Group } from "@mantine/core"; // Using Mantine components
 import "./navbar.css"; // Import the CSS file
 
 const Navbar = () => {
   const { user, isLoggedIn, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate(); // Initialize the navigate function
 
+  // Function to handle logout and redirect to the homepage
   const handleLogout = () => {
     logOutUser();
+    navigate("/"); // Redirect to the homepage after logout
   };
 
   return (
@@ -99,7 +102,7 @@ const Navbar = () => {
                     Profile
                   </Button>
                 </Link>
-                <Link to="/favourites">
+                <Link to="/favorites">
                   <Button variant="light" className="navbar-button">
                     Favourite Reels
                   </Button>

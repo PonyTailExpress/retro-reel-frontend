@@ -57,7 +57,7 @@ const SignInForm: React.FC = () => {
       // Make the POST request to the updated API URL
       console.log("Sending request with data:", formData);
       const response = await axios.post<AuthResponse>(
-        `${API_URL}/auth/login`,
+        `${API_URL}/auth/signin`,
         formData,
         {
           headers: { "Content-Type": "application/json" },

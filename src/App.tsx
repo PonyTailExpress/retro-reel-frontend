@@ -13,23 +13,32 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ProfilePage from "./pages/ProfilePage";
 import MovieDetail from "./pages/MovieDetail";
 import Footer from "./components/footer";
+import Favorites from "./pages/Favorites";
 
 function App() {
   return (
     <MantineProvider>
       <Router>
         <Navbar />
-        <div style={{ paddingTop: "60px" }}>
+        <div
+          style={{
+            paddingTop: "60px",
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/login" element={<SignInPage />} />
+            <Route path="/signin" element={<SignInPage />} />
             <Route path="/films/80s" element={<EightiesMovieList />} />
             <Route path="/films/90s" element={<NinetiesMovieList />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/profilepage" element={<ProfilePage />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/favorites" element={<Favorites />} />
           </Routes>
         </div>
         <Footer />

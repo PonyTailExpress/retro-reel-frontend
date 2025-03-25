@@ -19,7 +19,7 @@ const AboutPage: React.FC = () => {
 
       <h1>About Retro Reel</h1>
       <p>
-        Welcome to **Retro Reel**! The ultimate app designed for film lovers who
+        Welcome to Retro Reel! The ultimate app designed for film lovers who
         want to experience and explore the timeless classics from the 80s and
         90s. Whether it’s an action-packed blockbuster, a heartwarming drama, or
         a cult classic, Retro Reel allows you to search, discover, and save all
