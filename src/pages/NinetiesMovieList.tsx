@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
   Container,
@@ -8,7 +8,10 @@ import {
   Text,
   Loader,
   Alert,
+  Button,
 } from "@mantine/core";
+import { AuthContext } from "../context/auth.context";
+import { Notifications } from "@mantine/notifications";
 
 const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
@@ -25,6 +28,7 @@ const NinetiesMovieList: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const { isLoggedIn, user } = useContext(AuthContext);
 
   // Function to fetch movies from the backend
   const fetchMovies = async () => {
@@ -32,7 +36,7 @@ const NinetiesMovieList: React.FC = () => {
     setError(""); // Reset error before fetching
 
     try {
-      const response = await axios.get(API_URL); // Replace with your backend API endpoint
+      const response = await axios.get(API_URL);
       const allMovies = response.data;
 
       // Filter movies from the 1990s
@@ -49,6 +53,44 @@ const NinetiesMovieList: React.FC = () => {
       setError("Failed to fetch movies. Please try again later.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Handle adding movie to favorites
+  const handleAddToFavorites = async (movieId: number) => {
+    if (!isLoggedIn || !user) {
+      Notifications.show({
+        title: "Login Required",
+        message: "Please log in to add movies to your favorites.",
+        color: "red",
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/favorites/add`,
+        { userId: user.id, movieId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        Notifications.show({
+          title: "Success",
+          message: "Movie added to your favorites!",
+          color: "teal",
+        });
+      }
+    } catch (error) {
+      Notifications.show({
+        title: "Error",
+        message: "Failed to add movie to favorites.",
+        color: "red",
+      });
     }
   };
 
@@ -101,6 +143,17 @@ const NinetiesMovieList: React.FC = () => {
               <Text ta="center" fw={600} mt="sm">
                 {movie.title}
               </Text>
+
+              {/* Add to Favorites Button */}
+              {isLoggedIn && (
+                <Button
+                  mt="md"
+                  fullWidth
+                  onClick={() => handleAddToFavorites(movie.id)}
+                >
+                  Add to Favorites
+                </Button>
+              )}
             </Card>
           </Grid.Col>
         ))}
