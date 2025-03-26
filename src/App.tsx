@@ -49,7 +49,7 @@ function App() {
             <Route path="/films/90s" element={<NinetiesMovieList />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/profilepage" element={<ProfilePage />} />
-            <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/movies/:id" element={<MovieDetail />} />
             <Route path="/favorites" element={<Favorites />} />
           </Routes>
         </div>

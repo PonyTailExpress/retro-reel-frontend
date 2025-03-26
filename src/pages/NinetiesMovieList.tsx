@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { AuthContext } from "../context/auth.context";
 import { Notifications } from "@mantine/notifications";
+import { Link } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
@@ -110,51 +111,57 @@ const NinetiesMovieList: React.FC = () => {
       <Grid>
         {movies.map((movie) => (
           <Grid.Col key={movie.imdbId} span={4}>
-            <Card
-              shadow="sm"
-              p="lg"
-              radius="md"
-              withBorder
-              style={{
-                height: 450, // Set a fixed height for all cards
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Card.Section
+            {/* Wrap Card with Link to navigate to the movie detail page */}
+            <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+              <Card
+                shadow="sm"
+                p="lg"
+                radius="md"
+                withBorder
                 style={{
-                  flex: 1, // This makes the image section grow to fill available space
-                  overflow: "hidden", // Ensures that no part of the image overflows
+                  height: 450, // Set a fixed height for all cards
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                <Image
-                  src={
-                    movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
-                  }
-                  alt="Movie Poster"
+                <Card.Section
                   style={{
-                    objectFit: "cover", // Ensures the image fills the section without distortion
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "md",
+                    flex: 1, // This makes the image section grow to fill available space
+                    overflow: "hidden", // Ensures that no part of the image overflows
                   }}
-                />
-              </Card.Section>
-              <Text ta="center" fw={600} mt="sm">
-                {movie.title}
-              </Text>
-
-              {/* Add to Favorites Button */}
-              {isLoggedIn && (
-                <Button
-                  mt="md"
-                  fullWidth
-                  onClick={() => handleAddToFavorites(movie.id)}
                 >
-                  Add to Favorites
-                </Button>
-              )}
-            </Card>
+                  <Image
+                    src={
+                      movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
+                    }
+                    alt="Movie Poster"
+                    style={{
+                      objectFit: "cover", // Ensures the image fills the section without distortion
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "md",
+                    }}
+                  />
+                </Card.Section>
+                <Text ta="center" fw={600} mt="sm">
+                  {movie.title}
+                </Text>
+
+                {/* Add to Favorites Button */}
+                {isLoggedIn && (
+                  <Button
+                    mt="md"
+                    fullWidth
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent navigation when adding to favorites
+                      handleAddToFavorites(movie.id);
+                    }}
+                  >
+                    Add to Favorites
+                  </Button>
+                )}
+              </Card>
+            </Link>
           </Grid.Col>
         ))}
       </Grid>

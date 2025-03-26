@@ -12,9 +12,11 @@ import {
 } from "@mantine/core";
 import { AuthContext } from "../context/auth.context";
 import { Notifications } from "@mantine/notifications";
+import { Link } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
+// Define the movie interface based on your backend response
 interface Movie {
   id: number;
   imdbId: string;
@@ -29,29 +31,33 @@ const EightiesMovieList: React.FC = () => {
   const [error, setError] = useState<string>("");
   const { isLoggedIn, user } = useContext(AuthContext);
 
-  // Fetch movies from your backend API
+  // Function to fetch movies from the backend
   const fetchMovies = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(API_URL);
+    setLoading(true);
+    setError(""); // Reset error before fetching
 
-      if (response.status === 200) {
-        // Filter only movies from the 80s (1980 - 1989)
-        const eightiesMovies = response.data.filter(
-          (movie: Movie) =>
-            movie.releaseYear >= 1980 && movie.releaseYear < 1990
-        );
-        setMovies(eightiesMovies);
+    try {
+      const response = await axios.get(API_URL);
+      const allMovies = response.data;
+
+      // Filter movies from the 1980s
+      const eightiesMovies = allMovies.filter(
+        (movie: Movie) => movie.releaseYear >= 1980 && movie.releaseYear < 1990
+      );
+
+      if (eightiesMovies.length === 0) {
+        setError("No movies found from the 80s.");
       } else {
-        setError("Failed to fetch movies.");
+        setMovies(eightiesMovies);
       }
     } catch (err) {
-      setError("Failed to fetch movies.");
+      setError("Failed to fetch movies. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Handle adding movie to favorites
   const handleAddToFavorites = async (movieId: number) => {
     if (!isLoggedIn || !user) {
       Notifications.show({
@@ -90,7 +96,7 @@ const EightiesMovieList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchMovies(); // Fetch movies from the backend
+    fetchMovies(); // Fetch the movies when the component mounts
   }, []);
 
   return (
@@ -105,51 +111,54 @@ const EightiesMovieList: React.FC = () => {
       <Grid>
         {movies.map((movie) => (
           <Grid.Col key={movie.imdbId} span={4}>
-            <Card
-              shadow="sm"
-              p="lg"
-              radius="md"
-              withBorder
-              style={{
-                height: 450,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Card.Section
+            {/* Wrap Card with Link to navigate to the movie detail page */}
+            <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+              <Card
+                shadow="sm"
+                p="lg"
+                radius="md"
+                withBorder
                 style={{
-                  flex: 1, // This makes the image section grow to fill available space
-                  overflow: "hidden",
+                  height: 450, // Set a fixed height for all cards
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                <Image
-                  src={
-                    movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
-                  }
-                  alt="Movie Poster"
+                <Card.Section
                   style={{
-                    objectFit: "cover", // Ensures the image fills the section without distortion
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "md",
+                    flex: 1, // This makes the image section grow to fill available space
+                    overflow: "hidden", // Ensures that no part of the image overflows
                   }}
-                />
-              </Card.Section>
-              <Text ta="center" fw={600} mt="sm">
-                {movie.title}
-              </Text>
-
-              {/* Add to Favorites Button */}
-              {isLoggedIn && (
-                <Button
-                  mt="md"
-                  fullWidth
-                  onClick={() => handleAddToFavorites(movie.id)}
                 >
-                  Add to Favorites
-                </Button>
-              )}
-            </Card>
+                  <Image
+                    src={
+                      movie.poster !== "N/A" ? movie.poster : "/placeholder.jpg"
+                    }
+                    alt="Movie Poster"
+                    style={{
+                      objectFit: "cover", // Ensures the image fills the section without distortion
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "md",
+                    }}
+                  />
+                </Card.Section>
+                <Text ta="center" fw={600} mt="sm">
+                  {movie.title}
+                </Text>
+
+                {/* Add to Favorites Button */}
+                {isLoggedIn && (
+                  <Button
+                    mt="md"
+                    fullWidth
+                    onClick={() => handleAddToFavorites(movie.id)}
+                  >
+                    Add to Favorites
+                  </Button>
+                )}
+              </Card>
+            </Link>
           </Grid.Col>
         ))}
       </Grid>
