@@ -122,6 +122,7 @@ import {
   Button,
 } from "@mantine/core";
 import { AuthContext } from "../context/auth.context";
+import { Notifications } from "@mantine/notifications";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -170,9 +171,25 @@ const Favorites: React.FC = () => {
         },
       });
 
+      // Remove the movie from the favorites list
       setFavorites(favorites.filter((fav) => fav.movie.id !== movieId));
+
+      // Show a success notification
+      Notifications.show({
+        title: "Success",
+        message: "Movie removed from your favorites!",
+        color: "teal",
+        position: "top-right",
+        autoClose: 3000, // Close after 3 seconds
+      });
     } catch (error) {
-      alert("Failed to remove movie from favorites.");
+      Notifications.show({
+        title: "Error",
+        message: "Failed to remove movie from favorites.",
+        color: "red",
+        position: "top-right",
+        autoClose: 3000, // Close after 3 seconds
+      });
     }
   };
 

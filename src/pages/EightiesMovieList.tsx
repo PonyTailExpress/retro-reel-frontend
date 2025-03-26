@@ -1,4 +1,4 @@
-// import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect, useContext } from "react";
 // import axios from "axios";
 // import {
 //   Container,
@@ -8,8 +8,10 @@
 //   Text,
 //   Loader,
 //   Alert,
+//   Button,
 // } from "@mantine/core";
 // import { Link } from "react-router-dom";
+// import { AuthContext } from "../context/auth.context";
 
 // const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
@@ -25,6 +27,7 @@
 //   const [movies, setMovies] = useState<Movie[]>([]);
 //   const [loading, setLoading] = useState<boolean>(true);
 //   const [error, setError] = useState<string>("");
+//   const { isLoggedIn, user } = useContext(AuthContext); // Access AuthContext
 
 //   // Fetch movies from your backend API
 //   const fetchMovies = async () => {
@@ -46,6 +49,31 @@
 //       setError("Failed to fetch movies.");
 //     } finally {
 //       setLoading(false);
+//     }
+//   };
+
+//   const handleAddToFavorites = async (movieId: number) => {
+//     if (!isLoggedIn || !user) {
+//       alert("Please log in to add movies to your favorites.");
+//       return;
+//     }
+
+//     try {
+//       const response = await axios.post(
+//         `${import.meta.env.VITE_API_URL}/favorites/add`,
+//         { userId: user.id, movieId },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+//           },
+//         }
+//       );
+
+//       if (response.status === 201) {
+//         alert("Movie added to your favorites!");
+//       }
+//     } catch (error) {
+//       alert("Failed to add movie to favorites.");
 //     }
 //   };
 
@@ -99,6 +127,17 @@
 //                 <Text ta="center" fw={600} mt="sm">
 //                   {movie.title}
 //                 </Text>
+
+//                 {/* Add to Favorites Button */}
+//                 {isLoggedIn && (
+//                   <Button
+//                     mt="md"
+//                     fullWidth
+//                     onClick={() => handleAddToFavorites(movie.id)}
+//                   >
+//                     Add to Favorites
+//                   </Button>
+//                 )}
 //               </Card>
 //             </Link>
 //           </Grid.Col>
@@ -122,8 +161,9 @@ import {
   Alert,
   Button,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { Notifications } from "@mantine/notifications";
 
 const API_URL = import.meta.env.VITE_API_URL + "/movies";
 
@@ -140,6 +180,7 @@ const EightiesMovieList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const { isLoggedIn, user } = useContext(AuthContext); // Access AuthContext
+  const navigate = useNavigate(); // Hook for navigation
 
   // Fetch movies from your backend API
   const fetchMovies = async () => {
@@ -166,7 +207,13 @@ const EightiesMovieList: React.FC = () => {
 
   const handleAddToFavorites = async (movieId: number) => {
     if (!isLoggedIn || !user) {
-      alert("Please log in to add movies to your favorites.");
+      Notifications.show({
+        title: "Login Required",
+        message: "Please log in to add movies to your favorites.",
+        color: "red",
+        position: "top-right", // Set position to top-right
+        autoClose: 3000, // Close after 3 seconds
+      });
       return;
     }
 
@@ -182,10 +229,25 @@ const EightiesMovieList: React.FC = () => {
       );
 
       if (response.status === 201) {
-        alert("Movie added to your favorites!");
+        Notifications.show({
+          title: "Success",
+          message: "Movie added to your favorites!",
+          color: "teal",
+          // position: "top-right", // Set position to top-right
+          // autoClose: 3000, // Close after 3 seconds
+        });
+
+        // Redirect to the favorites page
+        navigate("/favorites");
       }
     } catch (error) {
-      alert("Failed to add movie to favorites.");
+      Notifications.show({
+        title: "Error",
+        message: "Failed to add movie to favorites.",
+        color: "red",
+        // position: "top-right", // Set position to top-right
+        // autoClose: 3000, // Close after 3 seconds
+      });
     }
   };
 

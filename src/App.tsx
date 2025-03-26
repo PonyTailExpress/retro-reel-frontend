@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 
 import AboutPage from "./pages/AboutPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -18,6 +19,17 @@ import Favorites from "./pages/Favorites";
 function App() {
   return (
     <MantineProvider>
+      <Notifications
+        position="top-right"
+        autoClose={3000}
+        style={{
+          position: "fixed",
+          top: "10px",
+          right: "10px",
+          zIndex: 9999,
+          pointerEvents: "none",
+        }}
+      />
       <Router>
         <Navbar />
         <div
