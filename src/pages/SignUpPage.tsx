@@ -56,7 +56,7 @@ const SignUpForm: React.FC = () => {
 
       // Step 2: Redirect the user to the sign-in page after successful sign-up
       setTimeout(() => {
-        navigate("/login"); // Redirect to the sign-in page
+        navigate("/signin"); // Redirect to the sign-in page
       }, 1000); // Optional: delay for the user to see the success message
     } catch (err: any) {
       setError("Sign-up failed. Please try again.");
