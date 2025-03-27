@@ -23,6 +23,13 @@ a:hover {
   color: #535bf2;
 }
 
+.notifications-container {
+  position: fixed !important;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  pointer-events: none;
+}
 
 body {
   margin: 0;
@@ -37,18 +44,14 @@ body {
   position: relative;
 }
 
-/* Retro 80s/90s Button Styling */
 button {
   border-radius: 6px;
-  /* Slightly sharper corners */
   border: 1px solid transparent;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: 500;
   font-family: 'Orbitron', sans-serif;
-  /* Retro 80s/90s font */
   background-color: #ff4081;
-  /* Neon pink color */
   color: white;
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s, color 0.3s, text-shadow 0.3s;
@@ -66,22 +69,16 @@ button:hover {
   text-shadow: 0 0 10px #ff4081;
 }
 
-/* Button Container Styling - Center the buttons vertically and horizontally */
 .button-container {
   display: flex;
   flex-direction: column;
-  /* Stack buttons vertically */
   justify-content: center;
   align-items: center;
   height: auto;
-  /* Allow it to adjust based on content */
   gap: 20px;
-  /* Space between the buttons */
   margin-top: 20px;
-  /* Space above the buttons */
 }
 
-/* Welcome Message and Paragraph Styling */
 .home-page-container {
   display: flex;
   flex-direction: column;
@@ -89,13 +86,9 @@ button:hover {
   align-items: center;
   height: 100vh;
   text-align: center;
-  /* Center text */
-  /* background-color: #242424; */
-  /* Dark background for the container */
   color: white;
 }
 
-/* Title Styling */
 .home-page-container h1 {
   font-size: 3rem;
   font-family: 'Orbitron', sans-serif;
@@ -103,15 +96,12 @@ button:hover {
   margin-bottom: 20px;
 }
 
-/* Paragraph Styling */
 .home-page-container p {
   font-size: 1.25rem;
   color: #f0a500;
   margin-bottom: 40px;
   font-family: 'Roboto', sans-serif;
 }
-
-/* Center form content (if any forms like signup/signin exist) */
 
 .signup-form,
 .signin-form {
@@ -120,7 +110,6 @@ button:hover {
   margin: 0 auto;
   padding: 20px;
   background: #f8f9fa;
-  /* Lighter background for the forms */
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -142,18 +131,15 @@ button:hover {
   font-size: 2rem;
 }
 
-/* Styling the labels inside the form */
 .signup-form label,
 .signin-form label {
   font-size: 1rem;
   color: #333;
-  /* Dark color for the labels to ensure visibility */
   margin-bottom: 8px;
   font-weight: bold;
   display: block;
 }
 
-/* Input fields inside the form */
 .signup-form input,
 .signin-form input {
   width: 100%;
@@ -163,27 +149,21 @@ button:hover {
   border: 1px solid #ccc;
   font-size: 1rem;
   background-color: #f0f0f0;
-  /* Light background for input fields */
   color: #333;
-  /* Dark text inside input fields */
 }
 
-/* Focus effect for input fields */
 .signup-form input:focus,
 .signin-form input:focus {
   border-color: #ff4081;
-  /* Neon pink focus border */
   outline: none;
 }
 
-/* Button styles inside the form */
 .signup-form button,
 .signin-form button {
   border-radius: 8px;
   padding: 10px 20px;
   font-size: 1rem;
   background-color: #ff4081;
-  /* Neon pink button */
   color: white;
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;
@@ -206,25 +186,25 @@ button:hover {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Form text (like error messages) */
 .signup-form p,
 .signin-form p {
   font-size: 0.9rem;
-  color: #d9534f;
-  /* Red color for error messages */
   text-align: center;
   margin-top: 10px;
 }
 
+/* Success message styling */
 .success {
   color: green;
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
 }
 
-/* Error message */
+/* Error message styling */
 .error {
   color: red;
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
 }

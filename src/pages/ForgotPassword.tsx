@@ -49,7 +49,7 @@ const ForgotPassword: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `${API_URL}/auth/forgot-password`,
+        `${API_URL}/auth/change-password`,
         formData
       );
       setSuccess("Password updated successfully!");
